@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #ff4d4d;
+            font-size: 3rem;
+        }
+
+        .doodle {
+            width: 350px;
+            height: auto;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d4d;
+            color: white;
+            font-weight: bold;
+        }
+
+        #noBtn {
+            background-color: white;
+            color: #ff4d4d;
+            border: 2px solid #ff4d4d;
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ffe6e6;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <img id="mainImage" class="doodle" src="https://i.imgur.com/ggU5EWK.png">
+
+    <h1 id="question">will you be my valentine?</h1>
+
+    <div class="buttons" id="btnContainer">
+        <button id="yesBtn" onclick="acceptLove()">yes</button>
+        <button id="noBtn" onclick="rejectLove()">no</button>
+    </div>
+
+    <div class="success-message" id="success">
+        <img class="doodle" src="https://i.imgur.com/SqJds83.png">
+        <h1>yaay! see you on the 14th! ❤️</h1>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        
+        const sadImageLink = "https://i.pinimg.com/736x/df/5c/2a/df5c2aada167f630d4e1a8b4a6b43703.jpg"; 
+
+        const phrases = [
+            "no",
+            "are you sure?",
+            "really sure? :(",
+            "think again!",
+            "last chance!",
+            "surely not?",
+            "you're breaking my heart!", 
+        ];
+
+        function rejectLove() {
+            noClickCount++;
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const btnContainer = document.getElementById('btnContainer');
+            const mainImage = document.getElementById('mainImage');
+            const question = document.getElementById('question');
+
+            // ending
+            if (noClickCount >= phrases.length) {
+                btnContainer.style.display = 'none';
+                mainImage.src = sadImageLink;
+                question.innerText = "okay fine... i get it.";
+                return;
+            }
+
+            // growing button
+            noBtn.innerText = phrases[noClickCount];
+            
+            let currentSize = 1.2 + (noClickCount * 0.5);
+            yesBtn.style.fontSize = currentSize + "rem";
+            yesBtn.style.padding = (15 + noClickCount * 10) + "px " + (30 + noClickCount * 10) + "px";
+        }
+
+        function acceptLove() {
+            document.getElementById('success').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
